@@ -117,6 +117,7 @@ class ViewController: UIViewController {
         //
         addConstraints()
         phoneNumberTextFiled.becomeFirstResponder()
+        phoneNumberTextFiled.borderStyle = .none
     }
 }
 
@@ -173,7 +174,7 @@ extension ViewController {
         lineView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         lineView.centerYAnchor.constraint(equalTo: inputPhoneNumberView.centerYAnchor).isActive = true
         lineView.leadingAnchor.constraint(equalTo: flagVN.trailingAnchor, constant: 12).isActive = true
-        phoneNumberTextFiled.trailingAnchor.constraint(equalTo: inputPhoneNumberView.trailingAnchor, constant: 10).isActive = true
+        inputPhoneNumberView.trailingAnchor.constraint(equalTo: phoneNumberTextFiled.trailingAnchor, constant: 10).isActive = true
         phoneNumberTextFiled.leadingAnchor.constraint(equalTo: lineView.trailingAnchor, constant: 12).isActive = true
         phoneNumberTextFiled.centerYAnchor.constraint(equalTo: inputPhoneNumberView.centerYAnchor).isActive = true
         phoneNumberTextFiled.heightAnchor.constraint(equalToConstant: 30).isActive = true
