@@ -144,11 +144,15 @@ extension ViewController {
         
         // step view
         stepView.centerYAnchor.constraint(equalTo: btnBack.centerYAnchor).isActive = true
-        stepView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        stepView.heightAnchor.constraint(equalToConstant: 28).isActive = true
+//        stepView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+//        stepView.heightAnchor.constraint(equalToConstant: 28).isActive = true
         view.trailingAnchor.constraint(equalTo: stepView.trailingAnchor, constant: 16).isActive = true
         stepLabel.centerXAnchor.constraint(equalTo: stepView.centerXAnchor).isActive = true
         stepLabel.centerYAnchor.constraint(equalTo: stepView.centerYAnchor).isActive = true
+        stepLabel.topAnchor.constraint(equalTo: stepView.topAnchor, constant: 5).isActive = true
+        stepLabel.leadingAnchor.constraint(equalTo: stepView.leadingAnchor, constant: 12).isActive = true
+        stepView.bottomAnchor.constraint(equalTo: stepLabel.bottomAnchor, constant: 5).isActive = true
+        stepView.trailingAnchor.constraint(equalTo: stepLabel.trailingAnchor, constant: 12).isActive = true
         
         // title Label
         titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
