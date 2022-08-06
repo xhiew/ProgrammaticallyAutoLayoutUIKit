@@ -118,6 +118,16 @@ class ViewController: UIViewController {
         addConstraints()
         phoneNumberTextFiled.becomeFirstResponder()
         phoneNumberTextFiled.borderStyle = .none
+        dismissKeyboard()
+    }
+    
+    func dismissKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func tapOnView() {
+        phoneNumberTextFiled.resignFirstResponder()
     }
 }
 
@@ -145,8 +155,6 @@ extension ViewController {
         
         // step view
         stepView.centerYAnchor.constraint(equalTo: btnBack.centerYAnchor).isActive = true
-//        stepView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-//        stepView.heightAnchor.constraint(equalToConstant: 28).isActive = true
         view.trailingAnchor.constraint(equalTo: stepView.trailingAnchor, constant: 16).isActive = true
         stepLabel.centerXAnchor.constraint(equalTo: stepView.centerXAnchor).isActive = true
         stepLabel.centerYAnchor.constraint(equalTo: stepView.centerYAnchor).isActive = true
