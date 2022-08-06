@@ -11,8 +11,10 @@ import UIKit
 class ViewController: UIViewController {
     
     let btnBack: UIButton = {
-        let btnBack = UIButton()
+        let btnBack = UIButton(type: .system)
         btnBack.setImage(UIImage(named: "btn_back"), for: .normal)
+        btnBack.tintColor = .black
+        btnBack.addTarget(self, action: #selector(btnBackTapped), for: .touchUpInside)
         btnBack.translatesAutoresizingMaskIntoConstraints = false
         return btnBack
     }()
@@ -73,6 +75,7 @@ class ViewController: UIViewController {
         phoneNumberTextField.placeholder = "Nhập số điện thoại"
         phoneNumberTextField.keyboardType = .numberPad
         phoneNumberTextField.font = UIFont.systemFont(ofSize: 15)
+        phoneNumberTextField.addTarget(self, action: #selector(phoneNumberTextChanged), for: .editingChanged)
         phoneNumberTextField.translatesAutoresizingMaskIntoConstraints = false
         return phoneNumberTextField
     }()
@@ -104,22 +107,44 @@ class ViewController: UIViewController {
     }()
     
     let btnNext: UIButton = {
-       let btnNext = UIButton()
+        let btnNext = UIButton(type: .system)
         btnNext.setTitle("Tiếp tục", for: .normal)
+        btnNext.setTitleColor(.white, for: .normal)
         btnNext.backgroundColor = UIColor.systemGray4
         btnNext.layer.cornerRadius = 15
+        btnNext.addTarget(self, action: #selector(btnNextTapped), for: .touchUpInside)
         btnNext.translatesAutoresizingMaskIntoConstraints = false
         return btnNext
     }()
     
+    //MARK: - View Did Load
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //
+        disableBtnNext()
         addConstraints()
         phoneNumberTextFiled.becomeFirstResponder()
         phoneNumberTextFiled.borderStyle = .none
         dismissKeyboard()
+        NotificationCenter.default.addObserver(self, selector: #selector(handle(keyboardShow:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    @objc func handle(keyboardShow notification: Notification) {
+        if let userInfo = notification.userInfo,
+            let heightKeyboard = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGFloat {
+//            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: heightKeyboard + 10).isActive = true
+//            view.updateConstraintsIfNeeded()
+//            view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func keyboardHide() {
+//        view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: 16).isActive = true
+//        view.layoutIfNeeded()
+    }
+    
     
     func dismissKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
@@ -128,6 +153,41 @@ class ViewController: UIViewController {
     
     @objc func tapOnView() {
         phoneNumberTextFiled.resignFirstResponder()
+    }
+    
+    @objc func btnBackTapped() {
+        print("Back")
+    }
+    
+    @objc func phoneNumberTextChanged() {
+        if phoneNumberTextFiled.text!.count > 10 {
+            phoneNumberTextFiled.text?.removeLast()
+        }
+        
+        if validatePhoneNumber() {
+            enableBtnNext()
+        } else { disableBtnNext() }
+        
+    }
+    
+    func validatePhoneNumber() -> Bool {
+        if phoneNumberTextFiled.text?.first == "0" && phoneNumberTextFiled.text!.count == 10 {
+            return true
+        } else { return false }
+    }
+    
+    func enableBtnNext() {
+        btnNext.backgroundColor = .tintColor
+        btnNext.isUserInteractionEnabled = true
+    }
+    
+    func disableBtnNext() {
+        btnNext.backgroundColor = .systemGray4
+        btnNext.isUserInteractionEnabled = false
+    }
+    
+    @objc func btnNextTapped() {
+        print("Next")
     }
 }
 
